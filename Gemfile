@@ -1,5 +1,7 @@
 source "https://rubygems.org"
 
+ruby File.open(File.dirname(__FILE__)+'/.ruby-version', 'rb') { |f| f.read.chomp }
+
 gem "rails", "~> 5.2.0"
 
 gem "mysql2"
