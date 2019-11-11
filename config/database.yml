@@ -5,10 +5,13 @@ default:
   password: dev_password
 
 development:
+  <<: *default
   database: lobsters_dev
 
 test:
+  <<: *default
   database: lobsters_test
 
 production:
+  <<: *default
   database: lobsters_production
