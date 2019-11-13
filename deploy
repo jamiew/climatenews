@@ -1,0 +1,4 @@
+#!/bin/sh
+# Deploy whatever current working branch is
+# TODO probably requires -f
+git push heroku +HEAD:master
