@@ -13,5 +13,4 @@ test:
   database: lobsters_test
 
 production:
-  <<: *default
-  database: lobsters_production
+  url: <%= ENV['DATABASE_URL'] %>
