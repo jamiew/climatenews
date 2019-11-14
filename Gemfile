@@ -4,10 +4,8 @@ ruby File.open(File.dirname(__FILE__)+'/.ruby-version', 'rb') { |f| f.read.chomp
 
 gem "rails", "~> 5.2.0"
 
-gem "mysql2"
-
-# uncomment to use PostgreSQL
 gem "pg"
+gem "puma"
 
 # rails
 gem 'scenic'
