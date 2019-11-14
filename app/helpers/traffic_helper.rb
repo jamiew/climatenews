@@ -8,7 +8,7 @@ module TrafficHelper
 
   def self.traffic_range
     div = PERIOD_LENGTH * 60
-    start_at = 'now() - interval 90 day'
+    start_at = "now() - interval '90 day'"
     result = ActiveRecord::Base.connection.execute <<-SQL
       select
         min(activity) as low,
@@ -19,9 +19,9 @@ module TrafficHelper
           -- s.period,
           v.n_votes + (c.n_comments * 10) + (s.n_stories * 20) AS activity
         from
-          (SELECT count(1) AS n_votes,    floor(UNIX_TIMESTAMP(updated_at)/#{div}) AS period FROM votes    WHERE updated_at >= #{start_at} GROUP BY period) v,
-          (SELECT count(1) AS n_comments, floor(UNIX_TIMESTAMP(created_at)/#{div}) AS period FROM comments WHERE created_at >= #{start_at} GROUP BY period) c,
-          (SELECT count(1) AS n_stories,  floor(UNIX_TIMESTAMP(created_at)/#{div}) AS period FROM stories  WHERE created_at >= #{start_at} GROUP BY period) s
+          (SELECT count(1) AS n_votes,    floor(extract(epoch from (updated_at))/#{div}) AS period FROM votes    WHERE updated_at >= #{start_at} GROUP BY period) v,
+          (SELECT count(1) AS n_comments, floor(extract(epoch from (created_at))/#{div}) AS period FROM comments WHERE created_at >= #{start_at} GROUP BY period) c,
+          (SELECT count(1) AS n_stories,  floor(extract(epoch from (created_at))/#{div}) AS period FROM stories  WHERE created_at >= #{start_at} GROUP BY period) s
         where
           s.period = c.period and
           s.period = v.period) act;
@@ -41,7 +41,7 @@ module TrafficHelper
   end
 
   def self.current_activity
-    start_at = "now() - interval #{PERIOD_LENGTH} minute"
+    start_at = "now() - interval '#{PERIOD_LENGTH} minute'"
     result = ActiveRecord::Base.connection.execute <<-SQL
       select
         (SELECT count(1) AS n_votes   FROM votes    WHERE updated_at >= #{start_at}) +
