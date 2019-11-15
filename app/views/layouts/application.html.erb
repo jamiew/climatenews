@@ -15,7 +15,10 @@
       <meta name="<%= k %>" content="<%= v %>" />
     <% end %>
   <% end %>
-  <link rel="shortcut icon" href="/favicon.ico" />
+
+  <link rel="shortcut icon" href="<%= image_path('earth.png') %>" />
+  <link rel="icon" type="image/png" href="<%= image_path('earth.png') %>" />
+
   <% if @short_url %>
     <link rev="canonical" rel="self alternate shorter shorturl shortlink"
       href="<%= @short_url %>" />
@@ -44,7 +47,7 @@
   <div id="wrapper">
     <div id="header">
       <div id="headerleft">
-        <a id="l_holder" style="<%= @traffic_style %>"
+        <a id="l_holder"
           href="/" title="<%= Rails.application.name %> (Current traffic: <%=
           @traffic_intensity.to_i %>%)"></a>
 
